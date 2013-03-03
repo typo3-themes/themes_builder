@@ -11,7 +11,7 @@ if (TYPO3_MODE === 'BE') {
 		array(                          # Konfiguration
 			'access'  => 'admin',
 			'icon'    => 'EXT:' . $_EXTKEY  . '/ext_icon.gif',
-			'labels'  => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xml',
+			'labels'  => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang.xml',
 		)
 	);
 }
