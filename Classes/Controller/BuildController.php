@@ -148,7 +148,7 @@ class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Control
 			$fileContent .= "\n";
 			$fileContent .= "\n";
 			$fileContent .= "if(!t3lib_extMgm::isLoaded('themes')) {\n";
-			$fileContent .=	'	t3lib_extMgm::addStaticFile($_EXTKEY, \'Resources/Private/TypoScript\', $_EXTKEY . \': theme\');' . "\n";
+			$fileContent .=	'	t3lib_extMgm::addStaticFile($_EXTKEY, \'Configuration/TypoScript\', $_EXTKEY . \': theme\');' . "\n";
 			$fileContent .=	"}\n";
 			file_put_contents($path . 'ext_tables.php', $fileContent);
 		}
