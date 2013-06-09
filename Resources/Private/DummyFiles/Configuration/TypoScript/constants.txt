@@ -1,1 +1,5 @@
+# Please add the TYPOScript to these files
+# - Resources/Private/TypoScript/Setup/Page.ts
+# - Resources/Private/TypoScript/Setup/Config.ts
+
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:{###extKey###}/Resources/Private/TypoScript/constants.ts">
