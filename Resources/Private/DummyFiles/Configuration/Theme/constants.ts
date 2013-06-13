@@ -1,5 +1,5 @@
-# Please add the TYPOScript to these files
-# - Resources/Private/TypoScript/Setup/Page.ts
-# - Resources/Private/TypoScript/Setup/Config.ts
+# Place you TypoScript constants here!
 
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:{###extKey###}/Resources/Private/TypoScript/constants.ts">
+plugin.tx_{###extKey###} {
+
+}
