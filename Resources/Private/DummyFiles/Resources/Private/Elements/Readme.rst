@@ -1,4 +1,4 @@
 Elements
 ========
 
-This directory contains elements recognized by ext:fluidcontent.
+This directory contains elements recognized by ext:gridelements.
