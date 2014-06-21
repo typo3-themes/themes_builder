@@ -1,7 +1,9 @@
 <?php
 
+/**
+ * @todo missing docblock
+ */
 class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Controller_ActionController {
-
 
 	/**
 	 * @var string Key of the extension this controller belongs to
@@ -22,24 +24,27 @@ class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Control
 		#$this->pageRenderer->addInlineLanguageLabelFile('EXT:workspaces/Resources/Private/Language/locallang.xml');
 	}
 
+	/**
+	 * @todo missing docblock
+	 */
 	public function indexAction() {
 		$this->view->assign(
-			'extensionDepencies',
-			array(
-				'fluid' => 'fluid',
-				'themes_adapter_templavoilaframework' => 'themes_adapter_templavoilaframework',
-				'dyncss_less' => 'Dyncss_less',
-				'dyncss_scss' => 'Dyncss_scss',
-				'fluidcontent' => 'fluidcontent',
-				'fluidcontent_bootstrap' => 'fluidcontent_bootstrap',
-				'fluidpages' => 'fluidpages',
-				'fluidpages_bootstrap' => 'fluidpages_bootstrap'
+			'extensionDepencies', array(
+			'fluid' => 'fluid',
+			'themes_adapter_templavoilaframework' => 'themes_adapter_templavoilaframework',
+			'dyncss_less' => 'Dyncss_less',
+			'dyncss_scss' => 'Dyncss_scss',
+			'fluidcontent' => 'fluidcontent',
+			'fluidcontent_bootstrap' => 'fluidcontent_bootstrap',
+			'fluidpages' => 'fluidpages',
+			'fluidpages_bootstrap' => 'fluidpages_bootstrap'
 			)
 		);
 	}
 
 	/**
 	 * Simple action to list some stuff
+	 * @todo is this function used?
 	 */
 	public function listAction() {
 
@@ -56,33 +61,28 @@ class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Control
 	 */
 	public function createAction($themeKey, array $options, array $information) {
 
-		$this->options               = $options;
-		$this->information           = $information;
+		$this->options = $options;
+		$this->information = $information;
 		$this->information['extKey'] = $themeKey;
 
 		try {
-			$extensionInstallPath    = PATH_site . 'typo3conf/ext/';
-			$themePath               = PATH_site . 'typo3conf/ext/' . $themeKey . '/';
-			if(file_exists($themePath)) {
+			$extensionInstallPath = PATH_site . 'typo3conf/ext/';
+			$themePath = PATH_site . 'typo3conf/ext/' . $themeKey . '/';
+			if (file_exists($themePath)) {
 				throw new Exception('Extension already existent, nothing to do.');
 			}
 
-
 			t3lib_div::mkdir_deep($extensionInstallPath, $themeKey);
 			$this->copyRecursiveAndReplace(
-				t3lib_div::getFileAbsFileName('EXT:themes_builder/Resources/Private/DummyFiles/'),
-				$themePath
+				t3lib_div::getFileAbsFileName('EXT:themes_builder/Resources/Private/DummyFiles/'), $themePath
 			);
 
 			$this->flashMessageContainer->add(
-				'Extension created',
-				'Successfully created extension: ' . $themeKey,
-				t3lib_FlashMessage::OK
+				'Extension created', 'Successfully created extension: ' . $themeKey, t3lib_FlashMessage::OK
 			);
 
 			$this->processPhpFiles($themePath);
-
-		} catch(Exception $e) {
+		} catch (Exception $e) {
 			$this->view->assignMultiple(
 				array(
 					'errorMsg' => $e->getMessage(),
@@ -91,6 +91,9 @@ class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Control
 		}
 	}
 
+	/**
+	 * @todo missing docblock
+	 */
 	protected function copyRecursiveAndReplace($source, $destination, $exclude = array()) {
 		/**
 		 * @var array $files
@@ -98,65 +101,64 @@ class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Control
 		$files = array();
 
 		$files = t3lib_div::getAllFilesAndFoldersInPath(
-			array(),
-			$source,
-			'',   // extensionList
-			TRUE  // inclusive directories
+			array(), $source, '', // extensionList
+			TRUE // inclusive directories
 		);
 
-		foreach($files as $entry) {
-			$shortEntry = str_replace($source,'',$entry);
-			if($shortEntry!='' && $shortEntry!='.') {
-				if(!in_array($shortEntry, $exclude)) {
-					if(is_dir($entry)) {
+		foreach ($files as $entry) {
+			$shortEntry = str_replace($source, '', $entry);
+			if ($shortEntry != '' && $shortEntry != '.') {
+				if (!in_array($shortEntry, $exclude)) {
+					if (is_dir($entry)) {
 						$cmd['newfolder'][] = array(
-							'data'   => basename($shortEntry),
+							'data' => basename($shortEntry),
 							'target' => dirname($destination . $shortEntry),
 						);
 						@mkdir($destination . $shortEntry);
-					} elseif(is_file($entry)) {
+					} elseif (is_file($entry)) {
 						$cmd['copy'][] = array(
-							'data'   => $entry,
+							'data' => $entry,
 							'target' => $destination . $shortEntry,
 						);
-						@copy(
-							$entry,
-							$destination . $shortEntry
-						);
+						@copy($entry, $destination . $shortEntry);
 						$this->replaceMarkersInFile($destination . $shortEntry);
 					}
 				}
 			}
 		}
 	}
+
+	/**
+	 * @todo missing docblock
+	 */
 	protected function replaceMarkersInFile($file) {
 		$fileContent = file_get_contents($file);
-		foreach($this->information as $key => $value) {
+		foreach ($this->information as $key => $value) {
 			$fileContent = str_replace(
-				'{###' . $key . '###}',
-				addslashes($value),
-				$fileContent
+				'{###' . $key . '###}', addslashes($value), $fileContent
 			);
 		}
 		file_put_contents($file, $fileContent);
 	}
 
+	/**
+	 * @todo missing docblock
+	 */
 	protected function processPhpFiles($path) {
 
-		if($this->options['includeStatic']) {
-			$fileContent  = file_get_contents($path . 'ext_tables.php');
+		if ($this->options['includeStatic']) {
+			$fileContent = file_get_contents($path . 'ext_tables.php');
 			$fileContent .= "\n";
 			$fileContent .= "\n";
 			$fileContent .= "if(!t3lib_extMgm::isLoaded('themes')) {\n";
-			$fileContent .=	'	t3lib_extMgm::addStaticFile($_EXTKEY, \'Configuration/TypoScript\', $_EXTKEY . \': theme\');' . "\n";
-			$fileContent .=	"}\n";
+			$fileContent .= '	t3lib_extMgm::addStaticFile($_EXTKEY, \'Configuration/TypoScript\', $_EXTKEY . \': theme\');' . "\n";
+			$fileContent .= "}\n";
 			file_put_contents($path . 'ext_tables.php', $fileContent);
 		}
 
 		$this->flashMessageContainer->add(
-			'Please add the depencies manually, this is currently not supported',
-			'',
-			t3lib_FlashMessage::WARNING
+			'Please add the depencies manually, this is currently not supported', '', t3lib_FlashMessage::WARNING
 		);
 	}
+
 }
