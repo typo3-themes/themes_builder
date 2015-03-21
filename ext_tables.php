@@ -1,6 +1,6 @@
 <?php
 if (TYPO3_MODE === 'BE') {
-	Tx_Extbase_Utility_Extension::registerModule(
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		$_EXTKEY, // Extension Key
 		'tools', // Category
 		'tx_theme_builder_m1', // Module name
