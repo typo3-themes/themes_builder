@@ -3,7 +3,7 @@
 /**
  * @todo missing docblock
  */
-class Tx_ThemesBuilder_Controller_BuildController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_ThemesBuilder_Controller_BuildController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * @var string Key of the extension this controller belongs to
